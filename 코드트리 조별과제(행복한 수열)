@@ -1,0 +1,58 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+#define max_n 100
+
+int n, m;
+int grid[max_n][max_n];
+
+int sequence[max_n];
+
+bool happycheck(){
+    int conscnt = 1, maxcnt = 1;
+    for(int i = 1; i < n; i++){
+        if(sequence[i - 1] == sequence[i]){
+            conscnt++;
+        }
+        else conscnt = 1;
+
+        maxcnt = max(maxcnt, conscnt);
+    }
+    return maxcnt >= m;
+}/*count 함수*/
+
+int main() {
+    cin >> n >> m;
+
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            cin >> grid[i][j];
+        }
+    }
+
+    int cnt = 0;
+
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            sequence[j] =grid[i][j];
+        }
+        if(happycheck()){
+            cnt++;
+        }
+    }/*가로 기준으로 재정렬 후 카운트*/
+
+    for(int j = 0; j < n; j++){
+        for(int i = 0; i < n; i++){
+            sequence[i] =grid[i][j];
+        }
+        if(happycheck()){
+            cnt++;
+        }
+    }/*세로 기준으로 재정렬 후 카운트*/
+    cout << cnt;
+    return 0;
+}
+/* 주요내용: 격자를 1차원 배열로 쪼개어 생각하기*/
+/* #코드트리 #코딩테스트 #코딩트리조별과제*/
